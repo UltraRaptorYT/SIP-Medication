@@ -19,6 +19,10 @@ app.use(function (req, res, next) {
 
 app.use(serveStatic(__dirname + "/public"));
 
+app.get("/", (req, res) => {
+  res.sendFile("/index.html", { root: __dirname });
+});
+
 app.listen(port, hostname, function () {
   console.log(`Server hosted at http://${hostname}:${port}`);
 });
