@@ -1,24 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MediPill</title>
-    <link rel="stylesheet" href="./css/index.css" />
-  </head>
-  <body>
-    <div class="slider">
-      <div class="slider-inner">
-        <div class="slide-img green"></div>
-        <div class="slide-img blue"></div>
-        <div class="slide-img red"></div>
-        <div class="slide-img yellow"></div>
-        <div class="slide-img purple"></div>
-        <div class="slide-img pink"></div>
-        <div class="slide-img"></div>
-      </div>
-    </div>
-    <script src="./js/slider.js"></script>
-  </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--bootstrap package-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>Homepage</title>
+</head>
+
+<body>
+    <!--Style-->
+    <style>
+        html {
+            font-size: 140%;
+        }
+
+        header {
+            position: relative;
+            background-color: black;
+            height: 30vw;
+            min-height: 25rem;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        header video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 0;
+            -ms-transform: translateX(-50%) translateY(-50%);
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        header .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        header .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: black;
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        .carousel-item {
+            height: 40vw;
+            position: relative;
+        }
+
+        #carousel .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #carousel h1 {
+            font-size: 5vw;
+        }
+
+        #carousel ul {
+            width: 80%;
+        }
+
+        #carousel li {
+            font-size: 12px;
+        }
+
+        @media(min-width: 500px) {
+            #carousel li {
+                font-size: 2vw;
+            }
+            header {
+            position: relative;
+            background-color: black;
+            height: 50vw;
+            min-height: 25rem;
+            width: 100%;
+            overflow: hidden;
+        }
+        }
+
+        .carousel-indicators {
+            bottom: -50px;
+        }
+
+
+
+    </style>
+
+    <!--navbar-->
+    <nav class="navbar navbar-expand-lg bg-danger navbar-dark">
+        <div class="container">
+            <a href="#" class="navbar-brand">SingPass</i></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navmenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-auto">
+                        <a href="#home" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item mx-auto">
+                        <a href="#services" class="nav-link">Services</a>
+                    </li>
+                    <li class="nav-item mx-auto">
+                        <a href="#product" class="nav-link">Product</a>
+                    </li>
+                    <li class="nav-item ps-lg-3 mx-auto my-lg-0 my-2" id="SignUp">
+                        <button type='button ' class="btn btn-outline-light">Sign Out</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--Video play-->
+    <header>
+
+        <!-- This div is  intentionally blank. It creates the transparent black overlay over the video which you can modify in the CSS -->
+        <div class="overlay"></div>
+
+        <!-- The HTML5 video element that will create the background video on the header -->
+        <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+            <source src="media/video-1.mp4" type="video/mp4">
+        </video>
+
+        <!-- The header content -->
+        <div class="container h-100">
+            <div class="d-flex h-100 text-center align-items-center">
+                <div class="w-100 text-white">
+                    <h1 class="display-3">Medication</h1>
+                    <p class="lead mb-0">What are you waiting for?</p>
+                    <button type='button ' class="btn btn-outline-light mt-4" id="video_button">Stop Forgetting</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!--Daily View-->
+    <section class="py-5 bg-dark text-light">
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner" id="carousel">
+                <div class="carousel-item active">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4 d-flex align-items-center justify-content-center"
+                                style="box-sizing: border-box;">
+                                <h1>Monday</h1>
+                            </div>
+                            <div class="col-lg-8 d-flex align-items-center justify-content-center">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-6"><strong>Medication</strong></div>
+                                            <div class="col-3"><strong>Meal</strong></div>
+                                            <div class="col-3"><strong>Time</strong></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">Metformin</div>
+                                            <div class="col-3">BBB</div>
+                                            <div class="col-3">SSS</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">Metformin</div>
+                                            <div class="col-3">BBB</div>
+                                            <div class="col-3">SSS</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">Metformin</div>
+                                            <div class="col-3">BBB</div>
+                                            <div class="col-3">SSS</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">Metformin</div>
+                                            <div class="col-3">BBB</div>
+                                            <div class="col-3">SSS</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4 d-flex align-items-center justify-content-center"
+                                style="box-sizing: border-box;">
+                                <h1>Tuesday</h1>
+                            </div>
+                            <div class="col-lg-8 d-flex align-items-center justify-content-center">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-6"><strong>Medication</strong></div>
+                                            <div class="col-3"><strong>Meal</strong></div>
+                                            <div class="col-3"><strong>Time</strong></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">Metformin</div>
+                                            <div class="col-3">BBB</div>
+                                            <div class="col-3">SSS</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">Metformin</div>
+                                            <div class="col-3">BBB</div>
+                                            <div class="col-3">SSS</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">Metformin</div>
+                                            <div class="col-3">BBB</div>
+                                            <div class="col-3">SSS</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">Metformin</div>
+                                            <div class="col-3">BBB</div>
+                                            <div class="col-3">SSS</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4 d-flex align-items-center justify-content-center"
+                                style="box-sizing: border-box;">
+                                <h1>Wednesday</h1>
+                            </div>
+                            <div class="col-lg-8 d-flex align-items-center justify-content-center">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-6"><strong>Medication</strong></div>
+                                            <div class="col-3"><strong>Meal</strong></div>
+                                            <div class="col-3"><strong>Time</strong></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">Metformin</div>
+                                            <div class="col-3">BBB</div>
+                                            <div class="col-3">SSS</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">Metformin</div>
+                                            <div class="col-3">BBB</div>
+                                            <div class="col-3">SSS</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">Metformin</div>
+                                            <div class="col-3">BBB</div>
+                                            <div class="col-3">SSS</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">Metformin</div>
+                                            <div class="col-3">BBB</div>
+                                            <div class="col-3">SSS</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <!--Slot View-->
+
+    <!--bootstrap package-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
 </html>
