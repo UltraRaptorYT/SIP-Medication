@@ -50,6 +50,10 @@
   background: hotpink;
 }
 
+.carousel-control {
+  color: black;
+}
+
 .carousel-icon {
   background-image: none;
   width: 25px;
