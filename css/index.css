@@ -1,70 +1,7 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0;padding: 0;box-sizing: border-box;}
 
-.slider {
-  position: absolute;
-  left: 10%;
-  top: 30%;
-  width: 80%;
-  height: 200px;
-  overflow: hidden;
-}
+.carousel-control {color: black;}
 
-.slider-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 200%;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  pointer-events: none;
-  gap: 5px;
-}
+.carousel-icon {background-image: none;width: 25px;height: 25px;color: black;}
 
-.slide-img {
-  height: 100%;
-  background: #333;
-  border-radius: 5px;
-  box-shadow: 0 0 5px white inset;
-}
-.slide-img.green {
-  background: springgreen;
-}
-.slide-img.blue {
-  background: cornflowerblue;
-}
-.slide-img.red {
-  background: tomato;
-}
-.slide-img.yellow {
-  background: gold;
-}
-.slide-img.purple {
-  background: mediumpurple;
-}
-.slide-img.pink {
-  background: hotpink;
-}
-
-.carousel-control {
-  color: black;
-}
-
-.carousel-icon {
-  background-image: none;
-  width: 25px;
-  height: 25px;
-  color: black;
-}
-
-.carousel-icon i {
-  color: black;
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
-  aspect-ratio: 1;
-}
+.carousel-icon i {color: black;font-size: 20px;width: 20px;height: 20px;aspect-ratio: 1;}
