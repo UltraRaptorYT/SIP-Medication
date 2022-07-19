@@ -5,18 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MediPill</title>
-    <link rel="stylesheet" href="./css/index.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
       integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="./css/index.css" />
   </head>
   <body>
     <div
       id="carouselExampleControls"
-      class="carousel slide bg-primary"
+      class="carousel slide w-25 d-block mx-auto"
       data-ride="carousel"
       data-interval="false"
     >
@@ -49,7 +53,7 @@
         data-target="#carouselExampleControls"
         data-slide="prev"
       >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="carousel-control-prev-icon carousel-icon" aria-hidden="true"><i class="bi bi-caret-left-fill"></i></span>
         <span class="sr-only">Previous</span>
       </button>
       <button
@@ -58,7 +62,7 @@
         data-target="#carouselExampleControls"
         data-slide="next"
       >
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="carousel-control-next-icon carousel-icon" aria-hidden="true"><i class="bi bi-caret-right-fill"></i></span>
         <span class="sr-only">Next</span>
       </button>
     </div>
