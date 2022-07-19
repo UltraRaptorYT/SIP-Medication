@@ -79,6 +79,19 @@
         transition: box-shadow ease-out 350ms;
       }
 
+      .drag-item:hover {
+        cursor: grab;
+        cursor: -moz-grab;
+        cursor: -webkit-grab;
+      }
+
+      .drag-over,
+      .drag-item:active {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
+      }
+
       .drag-item--touchmove {
         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
       }
@@ -103,6 +116,16 @@
         background: none;
       }
     </style>
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+      crossorigin="anonymous"
+    ></script>
     <script>
       function dragStart(e) {
         dragSrcEl = this;
@@ -119,13 +142,17 @@
 
       function dragOver(e) {
         e.preventDefault();
+        if (this.children.length > 0) {
+          
+        }
         return false;
       }
 
       function dragDrop(e) {
         if (dragSrcEl.classList.contains("drag-item")) {
-          this.appendChild(dragSrcEl);
-          console.log(this);
+          if (this.children.length <= 0) {
+            this.appendChild(dragSrcEl);
+          }
         }
         return false;
       }
@@ -208,7 +235,6 @@
           } else {
             if (touchEl.classList.contains("drag-item")) {
               target.appendChild(touchEl);
-              console.log(target);
             }
           }
         });
@@ -218,7 +244,6 @@
         clearTimeout(scrollDelay);
         x = 1;
       }
-
       function addEventsDragAndDrop(el) {
         el.addEventListener("dragstart", dragStart, false);
         el.addEventListener("dragend", dragEnd, false);
