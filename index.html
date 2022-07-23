@@ -215,25 +215,25 @@
       >
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <h1 class="text-center" id="monday">Monday</h1>
+            <h1 class="text-center" id="Monday">Monday</h1>
           </div>
           <div class="carousel-item">
-            <h1 class="text-center" id="tuesday">Tuesday</h1>
+            <h1 class="text-center" id="Tuesday">Tuesday</h1>
           </div>
           <div class="carousel-item">
-            <h1 class="text-center" id="wednesday">Wednesday</h1>
+            <h1 class="text-center" id="Wednesday">Wednesday</h1>
           </div>
           <div class="carousel-item">
-            <h1 class="text-center" id="thursday">Thursday</h1>
+            <h1 class="text-center" id="Thursday">Thursday</h1>
           </div>
           <div class="carousel-item">
-            <h1 class="text-center" id="friday">Friday</h1>
+            <h1 class="text-center" id="Friday">Friday</h1>
           </div>
           <div class="carousel-item">
-            <h1 class="text-center" id="saturday">Saturday</h1>
+            <h1 class="text-center" id="Saturday">Saturday</h1>
           </div>
           <div class="carousel-item">
-            <h1 class="text-center" id="sunday">Sunday</h1>
+            <h1 class="text-center" id="Sunday">Sunday</h1>
           </div>
         </div>
         <button
@@ -290,9 +290,7 @@
         </div>
       </div>
       <div class="row justify-content-around align-items-center text-center">
-        <button class="btn btn-secondary" id="save" disabled>
-          Save
-        </button>
+        <button class="btn btn-secondary" id="save" disabled>Save</button>
         <button class="btn btn-success" id="done">Done</button>
       </div>
     </div>
@@ -316,11 +314,34 @@
       });
       $("#carouselExampleControls").carousel();
       document.getElementById("prevDay").addEventListener("click", () => {
+        if (!$("#save").prop("disabled")) {
+          if (
+            !confirm(
+              `Do you want to save changes to ${
+                $("#carouselExampleControls .active")[0].children[0].id
+              }?`
+            )
+          ) {
+            return;
+          }
+        }
         $("#carouselExampleControls").carousel("prev");
       });
       document.getElementById("nextDay").addEventListener("click", () => {
+        if (!$("#save").prop("disabled")) {
+          if (
+            !confirm(
+              `Do you want to save changes to ${
+                $("#carouselExampleControls .active")[0].children[0].id
+              }?`
+            )
+          ) {
+            return;
+          }
+        }
         $("#carouselExampleControls").carousel("next");
       });
+
       function createBoxes() {
         while (
           document.getElementById("machine").children.length <
@@ -421,15 +442,6 @@
       }
 
       function dragDrop(e) {
-        var generator = document.querySelectorAll(".generate");
-        [].forEach.call(generator, function (item) {
-          generateMedicine(item);
-        });
-
-        var listItems = document.querySelectorAll(".drag-item");
-        [].forEach.call(listItems, function (item) {
-          addEventsDragAndDrop(item);
-        });
         if (dragSrcEl.classList.contains("drag-item")) {
           this.appendChild(dragSrcEl);
           if (this.id == "Trash") {
@@ -442,6 +454,15 @@
           $("#save").addClass("btn-primary");
           $("#save").prop("disabled", false);
         }
+        var generator = document.querySelectorAll(".generate");
+        [].forEach.call(generator, function (item) {
+          generateMedicine(item);
+        });
+
+        var listItems = document.querySelectorAll(".drag-item");
+        [].forEach.call(listItems, function (item) {
+          addEventsDragAndDrop(item);
+        });
         return false;
       }
 
@@ -520,15 +541,6 @@
           if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) {
             return false;
           } else {
-            var generator = document.querySelectorAll(".generate");
-            [].forEach.call(generator, function (item) {
-              generateMedicine(item);
-            });
-
-            var listItems = document.querySelectorAll(".drag-item");
-            [].forEach.call(listItems, function (item) {
-              addEventsDragAndDrop(item);
-            });
             if (touchEl.classList.contains("drag-item")) {
               target.appendChild(touchEl);
               if (target.id == "Trash") {
@@ -541,6 +553,15 @@
               $("#save").addClass("btn-primary");
               $("#save").prop("disabled", false);
             }
+            var generator = document.querySelectorAll(".generate");
+            [].forEach.call(generator, function (item) {
+              generateMedicine(item);
+            });
+
+            var listItems = document.querySelectorAll(".drag-item");
+            [].forEach.call(listItems, function (item) {
+              addEventsDragAndDrop(item);
+            });
           }
         });
 
