@@ -45,7 +45,7 @@
         <div class="drag-item drag-item--green" draggable="true"></div>
       </div>
       <div class="drag-container"></div>
-      <div class="drag-container">
+      <div class="drag-container generate generate--pill1">
         <div class="drag-item drag-item--red" draggable="true"></div>
       </div>
       <div class="drag-container"></div>
@@ -71,6 +71,9 @@
         display: inline-block;
         padding: 10px;
         border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       .drag-item {
@@ -127,6 +130,12 @@
       crossorigin="anonymous"
     ></script>
     <script>
+      var medicines = {
+        pill1: `<div class="drag-item drag-item--red" draggable="true"></div>`,
+        pill2: `<div class="drag-item drag-item--green" draggable="true"></div>`,
+        pill3: `<div class="drag-item drag-item--blue" draggable="true"></div>`,
+      };
+
       function dragStart(e) {
         dragSrcEl = this;
       }
@@ -143,13 +152,20 @@
       function dragOver(e) {
         e.preventDefault();
         if (this.children.length > 0) {
-          
         }
         return false;
       }
 
       function dragDrop(e) {
         if (dragSrcEl.classList.contains("drag-item")) {
+          [].forEach.call(generator, function (item) {
+            generateMedicine(item);
+          });
+
+          var listItems = document.querySelectorAll(".drag-item");
+          [].forEach.call(listItems, function (item) {
+            addEventsDragAndDrop(item);
+          });
           if (this.children.length <= 0) {
             this.appendChild(dragSrcEl);
           }
@@ -234,7 +250,17 @@
             return false;
           } else {
             if (touchEl.classList.contains("drag-item")) {
-              target.appendChild(touchEl);
+              [].forEach.call(generator, function (item) {
+                generateMedicine(item);
+              });
+
+              var listItems = document.querySelectorAll(".drag-item");
+              [].forEach.call(listItems, function (item) {
+                addEventsDragAndDrop(item);
+              });
+              if (target.children.length <= 0) {
+                target.appendChild(touchEl);
+              }
             }
           }
         });
@@ -262,6 +288,32 @@
       var targets = document.querySelectorAll(".drag-container");
       [].forEach.call(targets, function (target) {
         addTargetEvents(target);
+      });
+      // Generator
+      var matchString = "generate--";
+      function matchInArray(string, expressions) {
+        var len = expressions.length,
+          i = 0;
+
+        for (; i < len; i++) {
+          if (expressions[i].match(string)) {
+            return i;
+          }
+        }
+
+        return -1;
+      }
+      function generateMedicine(item) {
+        var classIndex = matchInArray(matchString, item.classList);
+        var matchArr = item.classList[classIndex].split(matchString);
+        var medicine = matchArr[matchArr.length - 1];
+        if (Object.keys(medicines).includes(medicine)) {
+          item.innerHTML = medicines[medicine];
+        }
+      }
+      var generator = document.querySelectorAll(".generate");
+      [].forEach.call(generator, function (item) {
+        generateMedicine(item);
       });
 
       var listItems = document.querySelectorAll(".drag-item");
