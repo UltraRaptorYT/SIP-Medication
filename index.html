@@ -348,10 +348,6 @@
       for (var [pill, pillImage] of Object.entries(medicines)) {
         var template = `<div class="item carousel-item"><div class="drag-container generate generate--${pill}">${pillImage}</div></div>`;
         document.getElementById("medicineSelector").innerHTML += template;
-        var listItems = document.querySelectorAll(".drag-item");
-        [].forEach.call(listItems, function (item) {
-          addEventsDragAndDrop(item);
-        });
       }
       document
         .getElementById("medicineSelector")
@@ -600,6 +596,15 @@
         }
         $(this).children(":first-child").prependTo(dom_nodes);
         dom_nodes.appendTo($(this));
+        var generator = document.querySelectorAll(".generate");
+        [].forEach.call(generator, function (item) {
+          generateMedicine(item);
+        });
+
+        var listItems = document.querySelectorAll(".drag-item");
+        [].forEach.call(listItems, function (item) {
+          addEventsDragAndDrop(item);
+        });
       });
     </script>
   </body>
