@@ -239,8 +239,7 @@
         <button
           class="carousel-control-prev carousel-control"
           type="button"
-          data-target="#carouselExampleControls"
-          data-slide="prev"
+          id="prevDay"
         >
           <span
             class="carousel-control-prev-icon carousel-icon"
@@ -252,8 +251,7 @@
         <button
           class="carousel-control-next carousel-control"
           type="button"
-          data-target="#carouselExampleControls"
-          data-slide="next"
+          id="nextDay"
         >
           <span
             class="carousel-control-next-icon carousel-icon"
@@ -291,6 +289,12 @@
           </div>
         </div>
       </div>
+      <div class="row justify-content-around align-items-center text-center">
+        <button class="btn btn-secondary" id="save" disabled>
+          Save
+        </button>
+        <button class="btn btn-success" id="done">Done</button>
+      </div>
     </div>
 
     <script
@@ -305,6 +309,18 @@
     ></script>
 
     <script>
+      document.getElementById("save").addEventListener("click", () => {
+        $("#save").prop("disabled", true);
+        $("#save").addClass("btn-secondary");
+        $("#save").removeClass("btn-primary");
+      });
+      $("#carouselExampleControls").carousel();
+      document.getElementById("prevDay").addEventListener("click", () => {
+        $("#carouselExampleControls").carousel("prev");
+      });
+      document.getElementById("nextDay").addEventListener("click", () => {
+        $("#carouselExampleControls").carousel("next");
+      });
       function createBoxes() {
         while (
           document.getElementById("machine").children.length <
@@ -422,6 +438,9 @@
           if (this.children.length > 1) {
             this.children[0].remove();
           }
+          $("#save").removeClass("btn-secondary");
+          $("#save").addClass("btn-primary");
+          $("#save").prop("disabled", false);
         }
         return false;
       }
@@ -518,6 +537,9 @@
               if (target.children.length > 1) {
                 target.children[0].remove();
               }
+              $("#save").removeClass("btn-secondary");
+              $("#save").addClass("btn-primary");
+              $("#save").prop("disabled", false);
             }
           }
         });
