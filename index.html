@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MediPill</title>
-    <link rel="shortcut icon" href="https://raw.githubusercontent.com/UltraRaptorYT/SIP-Medication/HY/Medipill.png" />
+    <link
+      rel="shortcut icon"
+      href="https://raw.githubusercontent.com/UltraRaptorYT/SIP-Medication/HY/Medipill.png"
+    />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
@@ -398,16 +401,26 @@
 
       function dragOver(e) {
         e.preventDefault();
-        if (this.children.length > 0) {
-        }
         return false;
       }
 
       function dragDrop(e) {
+        var generator = document.querySelectorAll(".generate");
+        [].forEach.call(generator, function (item) {
+          generateMedicine(item);
+        });
+
+        var listItems = document.querySelectorAll(".drag-item");
+        [].forEach.call(listItems, function (item) {
+          addEventsDragAndDrop(item);
+        });
         if (dragSrcEl.classList.contains("drag-item")) {
           this.appendChild(dragSrcEl);
           if (this.id == "Trash") {
             $("#Trash").html(`<i class="bi bi-trash3-fill"></i>`);
+          }
+          if (this.children.length > 1) {
+            this.children[0].remove();
           }
         }
         return false;
@@ -488,10 +501,22 @@
           if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) {
             return false;
           } else {
+            var generator = document.querySelectorAll(".generate");
+            [].forEach.call(generator, function (item) {
+              generateMedicine(item);
+            });
+
+            var listItems = document.querySelectorAll(".drag-item");
+            [].forEach.call(listItems, function (item) {
+              addEventsDragAndDrop(item);
+            });
             if (touchEl.classList.contains("drag-item")) {
               target.appendChild(touchEl);
               if (target.id == "Trash") {
                 $("#Trash").html(`<i class="bi bi-trash3-fill"></i>`);
+              }
+              if (target.children.length > 1) {
+                target.children[0].remove();
               }
             }
           }
