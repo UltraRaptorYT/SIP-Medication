@@ -108,7 +108,6 @@
 
       #Trash {
         width: 100px;
-        height: 100px;
         font-size: 25px;
       }
 
@@ -175,13 +174,14 @@
         color: lime;
       }
       .fontClamp {
-        font-size: clamp(2vh, 20px, 24px);
+        font-size: clamp(20px, 5vh, 30px);
       }
       .fontClampXL {
-        font-size: clamp(3vh, 24px, 30px);
+        font-size: clamp(24px, 5vh, 30px);
       }
       body {
         overflow: hidden;
+        overscroll-behavior-y: contain;
       }
     </style>
   </head>
@@ -329,19 +329,22 @@
         </div>
         <!--Display-->
         <div class="wrapper justify-content-center" id="machine"></div>
-        <div class="row justify-content-around align-items-center text-center">
-          <div class="drag-container col-6 col-md-3" id="Trash">
+        <div
+          class="row justify-content-around align-items-center text-center"
+          style="gap: 5px"
+        >
+          <div class="drag-container col-5 col-md-2" id="Trash">
             <i class="bi bi-trash3-fill"></i>
           </div>
-          <div class="col-6 col-md-3">
+          <div class="col-5 col-md-2">
             <button class="btn btn-primary">Dispense Now</button>
           </div>
-          <div class="col-6 col-md-3">
+          <div class="col-5 col-md-2">
             <a href="\5\on" class="btn btn-primary">Alert Now</a>
           </div>
-          <div class="col-6 col-md-3">
+          <div class="col-5 col-md-2">
             <div class="d-flex flex-column">
-              <p class="m-0">No. of Box</p>
+              <p class="m-0 font-weight-bold">No. of Box</p>
               <div class="d-flex justify-content-around align-items-center">
                 <button class="btn btn-secondary" id="minus">-</button>
                 <p class="m-0" id="boxes">2</p>
@@ -350,7 +353,9 @@
             </div>
           </div>
         </div>
-        <div class="row justify-content-around align-items-center text-center mt-2">
+        <div
+          class="row justify-content-around align-items-center text-center mt-2"
+        >
           <button class="btn btn-secondary" id="save" disabled>Save</button>
           <button class="btn btn-success" id="done">Done</button>
         </div>
@@ -445,7 +450,7 @@
       document.getElementById("add").addEventListener("click", () => {
         var value = Number(document.getElementById("boxes").innerHTML);
         value = value + 1;
-        if (value <= 10) {
+        if (value <= 7) {
           document.getElementById("boxes").innerHTML = value;
           createBoxes();
         }
