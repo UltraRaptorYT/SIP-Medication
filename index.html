@@ -1,715 +1,814 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MediPill</title>
-    <link rel="shortcut icon" href="https://raw.githubusercontent.com/UltraRaptorYT/SIP-Medication/HY/Medipill.png" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link
+      rel="shortcut icon"
+      href="https://raw.githubusercontent.com/UltraRaptorYT/SIP-Medication/HY/Medipill.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        .carousel-control {
-            color: black;
-        }
+      .carousel-control {
+        color: black;
+      }
 
-        .carousel-icon {
-            background-image: none;
-            width: 25px;
-            height: 25px;
-            color: black;
-        }
+      .carousel-icon {
+        background-image: none;
+        width: 25px;
+        height: 25px;
+        color: black;
+      }
 
-        .carousel-icon i {
-            color: black;
-            font-size: 20px;
-            width: 20px;
-            height: 20px;
-            aspect-ratio: 1;
-        }
+      .carousel-icon i {
+        color: black;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        aspect-ratio: 1;
+      }
 
-        .multi-item-carousel .carousel-inner>.item {
-            transition: 500ms ease-in-out left;
-        }
+      .multi-item-carousel .carousel-inner > .item {
+        transition: 500ms ease-in-out left;
+      }
 
-        .multi-item-carousel .carousel-inner .active.left {
-            left: -25%;
-        }
+      .multi-item-carousel .carousel-inner .active.left {
+        left: -25%;
+      }
 
-        .multi-item-carousel .carousel-inner .active.right {
-            left: 25%;
-        }
+      .multi-item-carousel .carousel-inner .active.right {
+        left: 25%;
+      }
 
-        .multi-item-carousel .carousel-inner .next {
-            left: 25%;
-        }
+      .multi-item-carousel .carousel-inner .next {
+        left: 25%;
+      }
 
-        .multi-item-carousel .carousel-inner .prev {
-            left: -25%;
-        }
+      .multi-item-carousel .carousel-inner .prev {
+        left: -25%;
+      }
 
-        @media all and (transform-3d),
-        (-webkit-transform-3d) {
-            .multi-item-carousel .carousel-inner>.item {
-                transition: 500ms ease-in-out left;
-                transition: 500ms ease-in-out all;
-                -webkit-backface-visibility: visible;
-                backface-visibility: visible;
-                transform: none !important;
-            }
+      @media all and (transform-3d), (-webkit-transform-3d) {
+        .multi-item-carousel .carousel-inner > .item {
+          transition: 500ms ease-in-out left;
+          transition: 500ms ease-in-out all;
+          -webkit-backface-visibility: visible;
+          backface-visibility: visible;
+          transform: none !important;
         }
+      }
 
-        .multi-item-carousel .carouse-control.left,
-        .multi-item-carousel .carouse-control.right {
-            background-image: none;
-        }
+      .multi-item-carousel .carouse-control.left,
+      .multi-item-carousel .carouse-control.right {
+        background-image: none;
+      }
 
+      .wrapper {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+        position: relative;
+        height: 300px;
+      }
+
+      @media only screen and (max-width: 768px) {
         .wrapper {
-            margin: 0 auto;
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-            display: flex;
-            flex-wrap: wrap;
-            position: relative;
-            height: 300px;
+          height: 200px;
         }
+      }
 
-        @media only screen and (max-width: 768px) {
-            .wrapper {
-                height: 200px;
-            }
-        }
+      .drag-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-        .drag-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+      #Trash {
+        width: 100px;
+        font-size: 25px;
+      }
 
-        #Trash {
-            width: 100px;
-            font-size: 25px;
-        }
+      .drag-container:not(#Trash):not(#pills) {
+        flex: 0 0 auto;
+        width: 50px;
+        min-height: 20px;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 10px;
+      }
 
-        .drag-container:not(#Trash):not(#pills) {
-            flex: 0 0 auto;
-            width: 50px;
-            min-height: 20px;
-            padding: 10px;
-            border: 1px solid black;
-            border-radius: 10px;
-        }
+      .drag-item:hover {
+        cursor: grab;
+        cursor: -moz-grab;
+        cursor: -webkit-grab;
+      }
 
-        .drag-item:hover {
-            cursor: grab;
-            cursor: -moz-grab;
-            cursor: -webkit-grab;
-        }
+      .drag-over,
+      .drag-item:active {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
+      }
 
-        .drag-over,
-        .drag-item:active {
-            cursor: grabbing;
-            cursor: -moz-grabbing;
-            cursor: -webkit-grabbing;
-        }
+      .drag-over:not(#Trash):not(.generate) {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
 
-        .drag-over:not(#Trash):not(.generate) {
-            background-color: rgba(0, 0, 0, 0.1);
-        }
+      .drag-start {
+        background: none;
+      }
 
-        .drag-start {
-            background: none;
-        }
+      .pill::before {
+        font: var(--fa-font-solid);
+        content: "\f484";
+        font-size: 2rem;
+      }
 
-        .pill::before {
-            font: var(--fa-font-solid);
-            content: "\f484";
-            font-size: 2rem;
-        }
+      .red::before {
+        color: red;
+      }
 
-        .red::before {
-            color: red;
-        }
+      .green::before {
+        color: green;
+      }
 
-        .green::before {
-            color: green;
-        }
+      .blue::before {
+        color: blue;
+      }
 
-        .blue::before {
-            color: blue;
-        }
+      .orange::before {
+        color: orange;
+      }
 
-        .orange::before {
-            color: orange;
-        }
+      .pink::before {
+        color: pink;
+      }
 
-        .pink::before {
-            color: pink;
-        }
+      .purple::before {
+        color: purple;
+      }
 
-        .purple::before {
-            color: purple;
-        }
+      .yellow::before {
+        color: yellow;
+      }
 
-        .yellow::before {
-            color: yellow;
-        }
+      .violet::before {
+        color: violet;
+      }
 
-        .violet::before {
-            color: violet;
-        }
+      .lime::before {
+        color: lime;
+      }
 
-        .lime::before {
-            color: lime;
-        }
+      .fontClampXL {
+        font-size: clamp(24px, 5vh, 30px);
+      }
 
+      body {
+        overflow: hidden;
+        overscroll-behavior-y: contain;
+      }
+
+      .fontClamp {
+        font-size: 23px;
+      }
+
+      @media (min-width: 900px) {
         .fontClamp {
-            font-size: clamp(20px, 5vh, 30px);
+          font-size: 5vh;
         }
-
-        .fontClampXL {
-            font-size: clamp(24px, 5vh, 30px);
-        }
-
-        body {
-            overflow: hidden;
-            overscroll-behavior-y: contain;
-        }
-
-        #gay {
-            font-size: 23px;
-        }
-
-        @media(min-width: 900px) {
-            #gay {
-                font-size: 3vw;
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-danger fixed-top pt-2 pb-2">
-        <div class="container">
-            <div class="d-flex justify-content-center align-items-center">
-                <a href="#" class="navbar-brand">MediPill</a>
-                <img src="https://raw.githubusercontent.com/UltraRaptorYT/SIP-Medication/HY/Medipill.png" alt=""
-                    style="width: 50px; height: 50px; margin-left: -10px" />
-            </div>
-            <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarMenu">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Help</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Support</a>
-                    </li>
-                </ul>
-            </div>
+  <body>
+    <nav
+      class="navbar navbar-expand-sm navbar-dark bg-danger fixed-top pt-2 pb-2"
+    >
+      <div class="container">
+        <div class="d-flex justify-content-center align-items-center">
+          <a href="#" class="navbar-brand">MediPill</a>
+          <img
+            src="https://raw.githubusercontent.com/UltraRaptorYT/SIP-Medication/HY/Medipill.png"
+            alt=""
+            style="width: 50px; height: 50px; margin-left: -10px"
+          />
         </div>
+        <button
+          class="navbar-toggler"
+          data-toggle="collapse"
+          data-target="#navbarMenu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMenu">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a href="#" class="nav-link">Help</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Support</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
 
     <section class="mt-5 pt-5">
-        <div class="d-flex align-items-center justify-content-center">
-            <h1 class="border border-secondary p-3 rounded-lg bg-dark text-light text-center fontClamp m-0" id="gay">
-                Pill Dispenser Manager
-            </h1>
+      <div class="d-flex align-items-center justify-content-center">
+        <h1
+          class="border border-secondary p-3 rounded-lg bg-dark text-light text-center fontClamp m-0"
+        >
+          Pill Dispenser Manager
+        </h1>
+      </div>
+      <div class="container mt-0 pt-2">
+        <div
+          id="carouselExampleControls"
+          class="carousel slide w-100 d-block mx-auto"
+          data-ride="carousel"
+          data-interval="false"
+        >
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Monday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Monday
+              </h1>
+            </div>
+            <div class="carousel-item">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Tuesday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Tuesday
+              </h1>
+            </div>
+            <div class="carousel-item">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Wednesday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Wednesday
+              </h1>
+            </div>
+            <div class="carousel-item">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Thursday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Thursday
+              </h1>
+            </div>
+            <div class="carousel-item">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Friday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Friday
+              </h1>
+            </div>
+            <div class="carousel-item">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Saturday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Saturday
+              </h1>
+            </div>
+            <div class="carousel-item">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Sunday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Sunday
+              </h1>
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev carousel-control"
+            type="button"
+            id="prevDay"
+          >
+            <span
+              class="carousel-control-prev-icon carousel-icon"
+              aria-hidden="true"
+              ><i class="bi bi-caret-left-fill"></i
+            ></span>
+            <span class="sr-only">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next carousel-control"
+            type="button"
+            id="nextDay"
+          >
+            <span
+              class="carousel-control-next-icon carousel-icon"
+              aria-hidden="true"
+              ><i class="bi bi-caret-right-fill"></i
+            ></span>
+            <span class="sr-only">Next</span>
+          </button>
         </div>
-        <div class="container mt-0 pt-2">
-            <div id="carouselExampleControls" class="carousel slide w-100 d-block mx-auto" data-ride="carousel"
-                data-interval="false">
-                <div class="carousel-inner">
-                    <div class="carousel-item active ">
-                        <h1 class="text-center fontClampXL m-0" id="Monday" style="height:50px;padding-top:7px;">Monday
-                        </h1>
-                    </div>
-                    <div class="carousel-item">
-                        <h1 class="text-center fontClampXL m-0" id="Tuesday" style="height:50px;padding-top:7px;">
-                            Tuesday</h1>
-                    </div>
-                    <div class="carousel-item">
-                        <h1 class="text-center fontClampXL m-0" id="Wednesday" style="height:50px;padding-top:7px;">
-                            Wednesday
-                        </h1>
-                    </div>
-                    <div class="carousel-item">
-                        <h1 class="text-center fontClampXL m-0" id="Thursday" style="height:50px;padding-top:7px;">
-                            Thursday
-                        </h1>
-                    </div>
-                    <div class="carousel-item">
-                        <h1 class="text-center fontClampXL m-0" id="Friday" style="height:50px;padding-top:7px;">Friday
-                        </h1>
-                    </div>
-                    <div class="carousel-item">
-                        <h1 class="text-center fontClampXL m-0" id="Saturday" style="height:50px;padding-top:7px;">
-                            Saturday
-                        </h1>
-                    </div>
-                    <div class="carousel-item">
-                        <h1 class="text-center fontClampXL m-0" id="Sunday" style="height:50px;padding-top:7px;">Sunday
-                        </h1>
-                    </div>
-                </div>
-                <button class="carousel-control-prev carousel-control" type="button" id="prevDay">
-                    <span class="carousel-control-prev-icon carousel-icon" aria-hidden="true"><i
-                            class="bi bi-caret-left-fill"></i></span>
-                    <span class="sr-only">Previous</span>
-                </button>
-                <button class="carousel-control-next carousel-control" type="button" id="nextDay">
-                    <span class="carousel-control-next-icon carousel-icon" aria-hidden="true"><i
-                            class="bi bi-caret-right-fill"></i></span>
-                    <span class="sr-only">Next</span>
-                </button>
+        <div class="row my-2">
+          <div class="col-12">
+            <div
+              class="carousel slide multi-item-carousel"
+              id="theCarousel"
+              data-touch="false"
+            >
+              <div
+                class="carousel-inner text-center"
+                id="medicineSelector"
+              ></div>
+              <button
+                class="carousel-control-prev carousel-control"
+                type="button"
+                data-target="#theCarousel"
+                data-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon carousel-icon"
+                  aria-hidden="true"
+                  ><i class="bi bi-caret-left-fill"></i
+                ></span>
+                <span class="sr-only">Previous</span></button
+              ><button
+                class="carousel-control-next carousel-control"
+                type="button"
+                data-target="#theCarousel"
+                data-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon carousel-icon"
+                  aria-hidden="true"
+                  ><i class="bi bi-caret-right-fill"></i
+                ></span>
+                <span class="sr-only">Next</span>
+              </button>
             </div>
-            <div class="row my-2">
-                <div class="col-12">
-                    <div class="carousel slide multi-item-carousel" id="theCarousel" data-touch="false">
-                        <div class="carousel-inner text-center" id="medicineSelector"></div>
-                        <button class="carousel-control-prev carousel-control" type="button" data-target="#theCarousel"
-                            data-slide="prev">
-                            <span class="carousel-control-prev-icon carousel-icon" aria-hidden="true"><i
-                                    class="bi bi-caret-left-fill"></i></span>
-                            <span class="sr-only">Previous</span></button><button
-                            class="carousel-control-next carousel-control" type="button" data-target="#theCarousel"
-                            data-slide="next">
-                            <span class="carousel-control-next-icon carousel-icon" aria-hidden="true"><i
-                                    class="bi bi-caret-right-fill"></i></span>
-                            <span class="sr-only">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!--Display-->
-            <div class="wrapper justify-content-center" id="machine"></div>
-            <div class="row justify-content-around align-items-center text-center" style="gap: 5px">
-                <div class="drag-container col-5 col-md-2" id="Trash">
-                    <i class="bi bi-trash3-fill"></i>
-                </div>
-                <div class="col-5 col-md-2">
-                    <button class="btn btn-primary">Dispense Now</button>
-                </div>
-                <div class="col-5 col-md-2">
-                    <a href="\5\on" class="btn btn-primary">Alert Now</a>
-                </div>
-                <div class="col-5 col-md-2">
-                    <div class="d-flex flex-column">
-                        <p class="m-0 font-weight-bold">No. of Box</p>
-                        <div class="d-flex justify-content-around align-items-center">
-                            <button class="btn btn-secondary" id="minus">-</button>
-                            <p class="m-0" id="boxes">2</p>
-                            <button class="btn btn-secondary" id="add">+</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row justify-content-around align-items-center text-center mt-2">
-                <button class="btn btn-secondary" id="save" disabled>Save</button>
-                <button class="btn btn-success" id="done">Done</button>
-            </div>
+          </div>
         </div>
+        <!--Display-->
+        <div class="wrapper justify-content-center" id="machine"></div>
+        <div
+          class="row justify-content-around align-items-center text-center"
+          style="gap: 5px"
+        >
+          <div class="drag-container col-5 col-md-2" id="Trash">
+            <i class="bi bi-trash3-fill"></i>
+          </div>
+          <div class="col-5 col-md-2">
+            <button class="btn btn-primary">Dispense Now</button>
+          </div>
+          <div class="col-5 col-md-2">
+            <a href="\5\on" class="btn btn-primary">Alert Now</a>
+          </div>
+          <div class="col-5 col-md-2">
+            <div class="d-flex flex-column">
+              <p class="m-0 font-weight-bold">No. of Box</p>
+              <div class="d-flex justify-content-around align-items-center">
+                <button class="btn btn-secondary" id="minus">-</button>
+                <p class="m-0" id="boxes">2</p>
+                <button class="btn btn-secondary" id="add">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="row justify-content-around align-items-center text-center mt-2"
+        >
+          <button class="btn btn-secondary" id="save" disabled>Save</button>
+          <button class="btn btn-success" id="done">Done</button>
+        </div>
+      </div>
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
-        crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+      crossorigin="anonymous"
+    ></script>
 
     <script>
-        document.getElementById("save").addEventListener("click", () => {
-            $("#save").prop("disabled", true);
-            $("#save").addClass("btn-secondary");
-            $("#save").removeClass("btn-primary");
-        });
-        $("#carouselExampleControls").carousel();
-        document.getElementById("prevDay").addEventListener("click", () => {
-            if (!$("#save").prop("disabled")) {
-                if (
-                    !confirm(
-                        `Do you want to save changes to ${$("#carouselExampleControls .active")[0].children[0].id
-                        }?`
-                    )
-                ) {
-                    return;
-                }
-            }
-            $("#carouselExampleControls").carousel("prev");
-        });
-        document.getElementById("nextDay").addEventListener("click", () => {
-            if (!$("#save").prop("disabled")) {
-                if (
-                    !confirm(
-                        `Do you want to save changes to ${$("#carouselExampleControls .active")[0].children[0].id
-                        }?`
-                    )
-                ) {
-                    return;
-                }
-            }
-            $("#carouselExampleControls").carousel("next");
-        });
-
-        function createBoxes() {
-            while (
-                document.getElementById("machine").children.length <
-                Number(document.getElementById("boxes").innerHTML)
-            ) {
-                document.getElementById(
-                    "machine"
-                ).innerHTML += `<div class="drag-container m-2"></div>`;
-            }
-            if (
-                document.getElementById("machine").children.length >
-                Number(document.getElementById("boxes").innerHTML)
-            ) {
-                do {
-                    document
-                        .getElementById("machine")
-                        .children[
-                        document.getElementById("machine").children.length - 1
-                    ].remove();
-                } while (
-                    document.getElementById("machine").children.length >
-                    Number(document.getElementById("boxes").innerHTML)
-                );
-            }
-            var targets = document.querySelectorAll(".drag-container");
-            [].forEach.call(targets, function (target) {
-                addTargetEvents(target);
-            });
+      document.getElementById("save").addEventListener("click", () => {
+        $("#save").prop("disabled", true);
+        $("#save").addClass("btn-secondary");
+        $("#save").removeClass("btn-primary");
+      });
+      $("#carouselExampleControls").carousel();
+      document.getElementById("prevDay").addEventListener("click", () => {
+        if (!$("#save").prop("disabled")) {
+          if (
+            !confirm(
+              `Do you want to save changes to ${
+                $("#carouselExampleControls .active")[0].children[0].id
+              }?`
+            )
+          ) {
+            return;
+          }
         }
-        createBoxes();
-        document.getElementById("minus").addEventListener("click", () => {
-            var value = Number(document.getElementById("boxes").innerHTML);
-            value = value - 1;
-            if (value > 0) {
-                document.getElementById("boxes").innerHTML = value;
-                createBoxes();
-            }
-        });
-        document.getElementById("add").addEventListener("click", () => {
-            var value = Number(document.getElementById("boxes").innerHTML);
-            value = value + 1;
-            if (value <= 7) {
-                document.getElementById("boxes").innerHTML = value;
-                createBoxes();
-            }
-        });
-        document.getElementById("Trash").addEventListener("click", () => {
-            document.getElementById("machine").innerHTML = "";
-            for (
-                var i = 0;
-                i < Number(document.getElementById("boxes").innerHTML);
-                i++
-            ) {
-                document.getElementById(
-                    "machine"
-                ).innerHTML += `<div class="drag-container m-2"></div>`;
-            }
-            var targets = document.querySelectorAll(".drag-container");
-            [].forEach.call(targets, function (target) {
-                addTargetEvents(target);
-            });
-        });
-        // Change Medicine
-        var medicines = {
-            pill1: `<div class="drag-item pill red" draggable="true"></div>`,
-            pill2: `<div class="drag-item pill green" draggable="true"></div>`,
-            pill3: `<div class="drag-item pill blue" draggable="true"></div>`,
-            pill4: `<div class="drag-item pill orange" draggable="true"></div>`,
-            pill5: `<div class="drag-item pill pink" draggable="true"></div>`,
-            pill6: `<div class="drag-item pill purple" draggable="true"></div>`,
-            pill7: `<div class="drag-item pill yellow" draggable="true"></div>`,
-            pill8: `<div class="drag-item pill violet" draggable="true"></div>`,
-            pill9: `<div class="drag-item pill lime" draggable="true"></div>`,
-        };
-        for (var [pill, pillImage] of Object.entries(medicines)) {
-            var template = `<div class="item carousel-item"><div class="drag-container generate generate--${pill}" id="pills">${pillImage}</div></div>`;
-            document.getElementById("medicineSelector").innerHTML += template;
+        $("#carouselExampleControls").carousel("prev");
+      });
+      document.getElementById("nextDay").addEventListener("click", () => {
+        if (!$("#save").prop("disabled")) {
+          if (
+            !confirm(
+              `Do you want to save changes to ${
+                $("#carouselExampleControls .active")[0].children[0].id
+              }?`
+            )
+          ) {
+            return;
+          }
         }
-        document
-            .getElementById("medicineSelector")
-            .firstChild.classList.add("active");
-        function dragStart(e) {
-            dragSrcEl = this;
+        $("#carouselExampleControls").carousel("next");
+      });
+
+      function createBoxes() {
+        while (
+          document.getElementById("machine").children.length <
+          Number(document.getElementById("boxes").innerHTML)
+        ) {
+          document.getElementById(
+            "machine"
+          ).innerHTML += `<div class="drag-container m-2"></div>`;
         }
-
-        function dragEnter(e) {
-            this.classList.add("drag-over");
+        if (
+          document.getElementById("machine").children.length >
+          Number(document.getElementById("boxes").innerHTML)
+        ) {
+          do {
+            document
+              .getElementById("machine")
+              .children[
+                document.getElementById("machine").children.length - 1
+              ].remove();
+          } while (
+            document.getElementById("machine").children.length >
+            Number(document.getElementById("boxes").innerHTML)
+          );
         }
-
-        function dragLeave(e) {
-            e.stopPropagation();
-            this.classList.remove("drag-over");
-        }
-
-        function dragOver(e) {
-            e.preventDefault();
-            return false;
-        }
-
-        function dragDrop(e) {
-            if (dragSrcEl.classList.contains("drag-item")) {
-                this.appendChild(dragSrcEl);
-                if (this.id == "Trash") {
-                    $("#Trash").html(`<i class="bi bi-trash3-fill"></i>`);
-                }
-                if (this.children.length > 1) {
-                    this.children[0].remove();
-                }
-                $("#save").removeClass("btn-secondary");
-                $("#save").addClass("btn-primary");
-                $("#save").prop("disabled", false);
-            }
-            var generator = document.querySelectorAll(".generate");
-            [].forEach.call(generator, function (item) {
-                generateMedicine(item);
-            });
-
-            var listItems = document.querySelectorAll(".drag-item");
-            [].forEach.call(listItems, function (item) {
-                addEventsDragAndDrop(item);
-            });
-            return false;
-        }
-
-        function dragEnd(e) {
-            var listItems = document.querySelectorAll(".drag-container");
-            [].forEach.call(listItems, function (item) {
-                item.classList.remove("drag-over");
-            });
-        }
-
-        function touchStart(e) {
-            this.classList.add("drag-item--touchmove");
-        }
-
-        var scrollDelay = 0;
-        var scrollDirection = 1;
-        function pageScroll(a, b) {
-            window.scrollBy(0, scrollDirection); // horizontal and vertical scroll increments
-            scrollDelay = setTimeout(pageScroll, 5); // scrolls every 100 milliseconds
-
-            if (a > window.innerHeight - b) {
-                scrollDirection = 1;
-            }
-            if (a < 0 + b) {
-                scrollDirection = -1 * scrollDirection;
-            }
-        }
-
-        var x = 1;
-        function touchMove(e) {
-            var touchLocation = e.targetTouches[0],
-                w = this.offsetWidth,
-                h = this.offsetHeight;
-
-            lastMove = e;
-            touchEl = this;
-            this.style.width = w + "px";
-            this.style.height = h + "px";
-            this.style.position = "fixed";
-            this.style.left = touchLocation.clientX - w / 2 + "px";
-            this.style.top = touchLocation.clientY - h / 2 + "px";
-
-            if (
-                touchLocation.clientY > window.innerHeight - h ||
-                touchLocation.clientY < 0 + h
-            ) {
-                if (x === 1) {
-                    x = 0;
-                    pageScroll(touchLocation.clientY, h);
-                }
-            } else {
-                clearTimeout(scrollDelay);
-                x = 1;
-            }
-        }
-
-        function touchEnd(e) {
-            var box1 = this.getBoundingClientRect(),
-                x1 = box1.left,
-                y1 = box1.top,
-                h1 = this.offsetHeight,
-                w1 = this.offsetWidth,
-                b1 = y1 + h1,
-                r1 = x1 + w1;
-
-            var targets = document.querySelectorAll(".drag-container");
-            [].forEach.call(targets, function (target) {
-                var box2 = target.getBoundingClientRect(),
-                    x2 = box2.left,
-                    y2 = box2.top,
-                    h2 = target.offsetHeight,
-                    w2 = target.offsetWidth,
-                    b2 = y2 + h2,
-                    r2 = x2 + w2;
-
-                if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) {
-                    return false;
-                } else {
-                    if (touchEl.classList.contains("drag-item")) {
-                        target.appendChild(touchEl);
-                        if (target.id == "Trash") {
-                            $("#Trash").html(`<i class="bi bi-trash3-fill"></i>`);
-                        }
-                        if (target.children.length > 1) {
-                            target.children[0].remove();
-                        }
-                        $("#save").removeClass("btn-secondary");
-                        $("#save").addClass("btn-primary");
-                        $("#save").prop("disabled", false);
-                    }
-                    var generator = document.querySelectorAll(".generate");
-                    [].forEach.call(generator, function (item) {
-                        generateMedicine(item);
-                    });
-
-                    var listItems = document.querySelectorAll(".drag-item");
-                    [].forEach.call(listItems, function (item) {
-                        addEventsDragAndDrop(item);
-                    });
-                }
-            });
-
-            this.removeAttribute("style");
-            this.classList.remove("drag-item--touchmove");
-            clearTimeout(scrollDelay);
-            x = 1;
-        }
-
-        function addEventsDragAndDrop(el) {
-            el.addEventListener("dragstart", dragStart, false);
-            el.addEventListener("dragend", dragEnd, false);
-            el.addEventListener("touchstart", touchStart, {
-                once: false,
-                passive: true,
-            });
-            el.addEventListener("touchmove", touchMove, {
-                once: false,
-                passive: true,
-            });
-            el.addEventListener("touchend", touchEnd, false);
-        }
-
-        function addTargetEvents(target) {
-            target.addEventListener("dragover", dragOver, false);
-            target.addEventListener("dragenter", dragEnter, false);
-            target.addEventListener("dragleave", dragLeave, false);
-            target.addEventListener("drop", dragDrop, false);
-        }
-
         var targets = document.querySelectorAll(".drag-container");
         [].forEach.call(targets, function (target) {
-            addTargetEvents(target);
+          addTargetEvents(target);
         });
-        // Generator
-        var matchString = "generate--";
-        function matchInArray(string, expressions) {
-            var len = expressions.length,
-                i = 0;
-
-            for (; i < len; i++) {
-                if (expressions[i].match(string)) {
-                    return i;
-                }
-            }
-
-            return -1;
+      }
+      createBoxes();
+      document.getElementById("minus").addEventListener("click", () => {
+        var value = Number(document.getElementById("boxes").innerHTML);
+        value = value - 1;
+        if (value > 0) {
+          document.getElementById("boxes").innerHTML = value;
+          createBoxes();
         }
-        function generateMedicine(item) {
-            var classIndex = matchInArray(matchString, item.classList);
-            var matchArr = item.classList[classIndex].split(matchString);
-            var medicine = matchArr[matchArr.length - 1];
-            if (Object.keys(medicines).includes(medicine)) {
-                item.innerHTML = medicines[medicine];
-            }
+      });
+      document.getElementById("add").addEventListener("click", () => {
+        var value = Number(document.getElementById("boxes").innerHTML);
+        value = value + 1;
+        if (value <= 7) {
+          document.getElementById("boxes").innerHTML = value;
+          createBoxes();
+        }
+      });
+      document.getElementById("Trash").addEventListener("click", () => {
+        document.getElementById("machine").innerHTML = "";
+        for (
+          var i = 0;
+          i < Number(document.getElementById("boxes").innerHTML);
+          i++
+        ) {
+          document.getElementById(
+            "machine"
+          ).innerHTML += `<div class="drag-container m-2"></div>`;
+        }
+        var targets = document.querySelectorAll(".drag-container");
+        [].forEach.call(targets, function (target) {
+          addTargetEvents(target);
+        });
+      });
+      // Change Medicine
+      var medicines = {
+        pill1: `<div class="drag-item pill red" draggable="true"></div>`,
+        pill2: `<div class="drag-item pill green" draggable="true"></div>`,
+        pill3: `<div class="drag-item pill blue" draggable="true"></div>`,
+        pill4: `<div class="drag-item pill orange" draggable="true"></div>`,
+        pill5: `<div class="drag-item pill pink" draggable="true"></div>`,
+        pill6: `<div class="drag-item pill purple" draggable="true"></div>`,
+        pill7: `<div class="drag-item pill yellow" draggable="true"></div>`,
+        pill8: `<div class="drag-item pill violet" draggable="true"></div>`,
+        pill9: `<div class="drag-item pill lime" draggable="true"></div>`,
+      };
+      for (var [pill, pillImage] of Object.entries(medicines)) {
+        var template = `<div class="item carousel-item"><div class="drag-container generate generate--${pill}" id="pills">${pillImage}</div></div>`;
+        document.getElementById("medicineSelector").innerHTML += template;
+      }
+      document
+        .getElementById("medicineSelector")
+        .firstChild.classList.add("active");
+      function dragStart(e) {
+        dragSrcEl = this;
+      }
+
+      function dragEnter(e) {
+        this.classList.add("drag-over");
+      }
+
+      function dragLeave(e) {
+        e.stopPropagation();
+        this.classList.remove("drag-over");
+      }
+
+      function dragOver(e) {
+        e.preventDefault();
+        return false;
+      }
+
+      function dragDrop(e) {
+        if (dragSrcEl.classList.contains("drag-item")) {
+          this.appendChild(dragSrcEl);
+          if (this.id == "Trash") {
+            $("#Trash").html(`<i class="bi bi-trash3-fill"></i>`);
+          }
+          if (this.children.length > 1) {
+            this.children[0].remove();
+          }
+          $("#save").removeClass("btn-secondary");
+          $("#save").addClass("btn-primary");
+          $("#save").prop("disabled", false);
         }
         var generator = document.querySelectorAll(".generate");
         [].forEach.call(generator, function (item) {
-            generateMedicine(item);
+          generateMedicine(item);
         });
 
         var listItems = document.querySelectorAll(".drag-item");
         [].forEach.call(listItems, function (item) {
-            addEventsDragAndDrop(item);
+          addEventsDragAndDrop(item);
         });
+        return false;
+      }
 
-        $(".multi-item-carousel").carousel({
-            interval: false,
+      function dragEnd(e) {
+        var listItems = document.querySelectorAll(".drag-container");
+        [].forEach.call(listItems, function (item) {
+          item.classList.remove("drag-over");
         });
+      }
 
-        $(".multi-item-carousel .item").each(function () {
-            var dom_nodes = $(
-                $.parseHTML(
-                    '<div class="row justify-content-around align-items-center mx-3"></div>'
-                )
-            );
-            var next = $(this).next();
+      function touchStart(e) {
+        this.classList.add("drag-item--touchmove");
+      }
 
-            if (!next.length) {
-                next = $(this).siblings(":first");
+      var scrollDelay = 0;
+      var scrollDirection = 1;
+      function pageScroll(a, b) {
+        window.scrollBy(0, scrollDirection); // horizontal and vertical scroll increments
+        scrollDelay = setTimeout(pageScroll, 5); // scrolls every 100 milliseconds
+
+        if (a > window.innerHeight - b) {
+          scrollDirection = 1;
+        }
+        if (a < 0 + b) {
+          scrollDirection = -1 * scrollDirection;
+        }
+      }
+
+      var x = 1;
+      function touchMove(e) {
+        var touchLocation = e.targetTouches[0],
+          w = this.offsetWidth,
+          h = this.offsetHeight;
+
+        lastMove = e;
+        touchEl = this;
+        this.style.width = w + "px";
+        this.style.height = h + "px";
+        this.style.position = "fixed";
+        this.style.left = touchLocation.clientX - w / 2 + "px";
+        this.style.top = touchLocation.clientY - h / 2 + "px";
+
+        if (
+          touchLocation.clientY > window.innerHeight - h ||
+          touchLocation.clientY < 0 + h
+        ) {
+          if (x === 1) {
+            x = 0;
+            pageScroll(touchLocation.clientY, h);
+          }
+        } else {
+          clearTimeout(scrollDelay);
+          x = 1;
+        }
+      }
+
+      function touchEnd(e) {
+        var box1 = this.getBoundingClientRect(),
+          x1 = box1.left,
+          y1 = box1.top,
+          h1 = this.offsetHeight,
+          w1 = this.offsetWidth,
+          b1 = y1 + h1,
+          r1 = x1 + w1;
+
+        var targets = document.querySelectorAll(".drag-container");
+        [].forEach.call(targets, function (target) {
+          var box2 = target.getBoundingClientRect(),
+            x2 = box2.left,
+            y2 = box2.top,
+            h2 = target.offsetHeight,
+            w2 = target.offsetWidth,
+            b2 = y2 + h2,
+            r2 = x2 + w2;
+
+          if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) {
+            return false;
+          } else {
+            if (touchEl.classList.contains("drag-item")) {
+              target.appendChild(touchEl);
+              if (target.id == "Trash") {
+                $("#Trash").html(`<i class="bi bi-trash3-fill"></i>`);
+              }
+              if (target.children.length > 1) {
+                target.children[0].remove();
+              }
+              $("#save").removeClass("btn-secondary");
+              $("#save").addClass("btn-primary");
+              $("#save").prop("disabled", false);
             }
-            if (next.children(":first-child").hasClass("row")) {
-                next
-                    .children(":first-child")
-                    .children(":first-child")
-                    .clone()
-                    .appendTo(dom_nodes);
-            } else {
-                next.children(":first-child").clone().appendTo(dom_nodes);
-            }
-            if (next.next().length > 0) {
-                if (next.next().children(":first-child").hasClass("row")) {
-                    next
-                        .next()
-                        .children(":first-child")
-                        .children(":first-child")
-                        .clone()
-                        .appendTo(dom_nodes);
-                } else {
-                    next.next().children(":first-child").clone().appendTo(dom_nodes);
-                }
-            } else {
-                $(this)
-                    .siblings(":first")
-                    .children(":first-child")
-                    .children(":first-child")
-                    .clone()
-                    .appendTo(dom_nodes);
-            }
-            $(this).children(":first-child").prependTo(dom_nodes);
-            dom_nodes.appendTo($(this));
             var generator = document.querySelectorAll(".generate");
             [].forEach.call(generator, function (item) {
-                generateMedicine(item);
+              generateMedicine(item);
             });
 
             var listItems = document.querySelectorAll(".drag-item");
             [].forEach.call(listItems, function (item) {
-                addEventsDragAndDrop(item);
+              addEventsDragAndDrop(item);
             });
-            var targets = document.querySelectorAll(".drag-container");
-            [].forEach.call(targets, function (target) {
-                addTargetEvents(target);
-            });
+          }
         });
-    </script>
-</body>
 
+        this.removeAttribute("style");
+        this.classList.remove("drag-item--touchmove");
+        clearTimeout(scrollDelay);
+        x = 1;
+      }
+
+      function addEventsDragAndDrop(el) {
+        el.addEventListener("dragstart", dragStart, false);
+        el.addEventListener("dragend", dragEnd, false);
+        el.addEventListener("touchstart", touchStart, {
+          once: false,
+          passive: true,
+        });
+        el.addEventListener("touchmove", touchMove, {
+          once: false,
+          passive: true,
+        });
+        el.addEventListener("touchend", touchEnd, false);
+      }
+
+      function addTargetEvents(target) {
+        target.addEventListener("dragover", dragOver, false);
+        target.addEventListener("dragenter", dragEnter, false);
+        target.addEventListener("dragleave", dragLeave, false);
+        target.addEventListener("drop", dragDrop, false);
+      }
+
+      var targets = document.querySelectorAll(".drag-container");
+      [].forEach.call(targets, function (target) {
+        addTargetEvents(target);
+      });
+      // Generator
+      var matchString = "generate--";
+      function matchInArray(string, expressions) {
+        var len = expressions.length,
+          i = 0;
+
+        for (; i < len; i++) {
+          if (expressions[i].match(string)) {
+            return i;
+          }
+        }
+
+        return -1;
+      }
+      function generateMedicine(item) {
+        var classIndex = matchInArray(matchString, item.classList);
+        var matchArr = item.classList[classIndex].split(matchString);
+        var medicine = matchArr[matchArr.length - 1];
+        if (Object.keys(medicines).includes(medicine)) {
+          item.innerHTML = medicines[medicine];
+        }
+      }
+      var generator = document.querySelectorAll(".generate");
+      [].forEach.call(generator, function (item) {
+        generateMedicine(item);
+      });
+
+      var listItems = document.querySelectorAll(".drag-item");
+      [].forEach.call(listItems, function (item) {
+        addEventsDragAndDrop(item);
+      });
+
+      $(".multi-item-carousel").carousel({
+        interval: false,
+      });
+
+      $(".multi-item-carousel .item").each(function () {
+        var dom_nodes = $(
+          $.parseHTML(
+            '<div class="row justify-content-around align-items-center mx-3"></div>'
+          )
+        );
+        var next = $(this).next();
+
+        if (!next.length) {
+          next = $(this).siblings(":first");
+        }
+        if (next.children(":first-child").hasClass("row")) {
+          next
+            .children(":first-child")
+            .children(":first-child")
+            .clone()
+            .appendTo(dom_nodes);
+        } else {
+          next.children(":first-child").clone().appendTo(dom_nodes);
+        }
+        if (next.next().length > 0) {
+          if (next.next().children(":first-child").hasClass("row")) {
+            next
+              .next()
+              .children(":first-child")
+              .children(":first-child")
+              .clone()
+              .appendTo(dom_nodes);
+          } else {
+            next.next().children(":first-child").clone().appendTo(dom_nodes);
+          }
+        } else {
+          $(this)
+            .siblings(":first")
+            .children(":first-child")
+            .children(":first-child")
+            .clone()
+            .appendTo(dom_nodes);
+        }
+        $(this).children(":first-child").prependTo(dom_nodes);
+        dom_nodes.appendTo($(this));
+        var generator = document.querySelectorAll(".generate");
+        [].forEach.call(generator, function (item) {
+          generateMedicine(item);
+        });
+
+        var listItems = document.querySelectorAll(".drag-item");
+        [].forEach.call(listItems, function (item) {
+          addEventsDragAndDrop(item);
+        });
+        var targets = document.querySelectorAll(".drag-container");
+        [].forEach.call(targets, function (target) {
+          addTargetEvents(target);
+        });
+      });
+    </script>
+  </body>
 </html>
