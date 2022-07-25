@@ -19,6 +19,10 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
     <style>
       * {
         margin: 0;
@@ -48,18 +52,23 @@
       .multi-item-carousel .carousel-inner > .item {
         transition: 500ms ease-in-out left;
       }
+
       .multi-item-carousel .carousel-inner .active.left {
         left: -25%;
       }
+
       .multi-item-carousel .carousel-inner .active.right {
         left: 25%;
       }
+
       .multi-item-carousel .carousel-inner .next {
         left: 25%;
       }
+
       .multi-item-carousel .carousel-inner .prev {
         left: -25%;
       }
+
       @media all and (transform-3d), (-webkit-transform-3d) {
         .multi-item-carousel .carousel-inner > .item {
           transition: 500ms ease-in-out left;
@@ -69,10 +78,12 @@
           transform: none !important;
         }
       }
+
       .multi-item-carousel .carouse-control.left,
       .multi-item-carousel .carouse-control.right {
         background-image: none;
       }
+
       .wrapper {
         margin: 0 auto;
         width: 100%;
@@ -81,29 +92,36 @@
         display: flex;
         flex-wrap: wrap;
         position: relative;
+        height: 300px;
+      }
+      @media only screen and (max-width: 768px) {
+        .wrapper {
+          height: 200px;
+        }
+      }
+      @media only screen and (max-width: 1280px) {
+        .wrapper {
+          height: 225px;
+        }
       }
       .drag-container {
         display: flex;
         justify-content: center;
         align-items: center;
       }
+
       #Trash {
         width: 100px;
-        height: 100px;
         font-size: 25px;
       }
-      .drag-container:not(#Trash) {
+
+      .drag-container:not(#Trash):not(#pills) {
         flex: 0 0 auto;
         width: 50px;
-        min-height: 50px;
+        min-height: 20px;
         padding: 10px;
         border: 1px solid black;
-      }
-
-      .drag-item {
-        width: 100%;
-        height: 25px;
-        transition: box-shadow ease-out 350ms;
+        border-radius: 10px;
       }
 
       .drag-item:hover {
@@ -119,181 +137,286 @@
         cursor: -webkit-grabbing;
       }
 
-      .drag-item--touchmove {
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-      }
-
-      .drag-item--red {
-        background-color: red;
-      }
-
-      .drag-item--blue {
-        background-color: blue;
-      }
-
-      .drag-item--green {
-        background-color: green;
-      }
-
-      .drag-item--orange {
-        background-color: orange;
-      }
-
-      .drag-item--pink {
-        background-color: pink;
-      }
-
-      .drag-item--purple {
-        background-color: purple;
-      }
-
-      .drag-item--yellow {
-        background-color: yellow;
-      }
-
-      .drag-item--violet {
-        background-color: violet;
-      }
-
-      .drag-item--lime {
-        background-color: lime;
-      }
-
-      .drag-over:not(#Trash) {
+      .drag-over:not(#Trash):not(.generate) {
         background-color: rgba(0, 0, 0, 0.1);
       }
 
       .drag-start {
         background: none;
       }
+
+      .pill::before {
+        font: var(--fa-font-solid);
+        content: "\f484";
+        font-size: 2rem;
+      }
+
+      .red::before {
+        color: red;
+      }
+
+      .green::before {
+        color: green;
+      }
+
+      .blue::before {
+        color: blue;
+      }
+
+      .orange::before {
+        color: orange;
+      }
+
+      .pink::before {
+        color: pink;
+      }
+
+      .purple::before {
+        color: purple;
+      }
+
+      .yellow::before {
+        color: yellow;
+      }
+
+      .violet::before {
+        color: violet;
+      }
+
+      .lime::before {
+        color: lime;
+      }
+
+      .fontClampXL {
+        font-size: clamp(24px, 5vh, 30px);
+      }
+
+      body {
+        overflow: hidden;
+        overscroll-behavior-y: contain;
+      }
+
+      .fontClamp {
+        font-size: 23px;
+      }
+
+      @media (min-width: 900px) {
+        .fontClamp {
+          font-size: 5vh;
+        }
+      }
     </style>
   </head>
+
   <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <div
-            class="carousel slide multi-item-carousel"
-            id="theCarousel"
-            data-touch="false"
+    <nav class="navbar navbar-expand-sm navbar-dark bg-danger pt-2 pb-2">
+      <div class="container">
+        <div class="d-flex justify-content-center align-items-center">
+          <a href="#" class="navbar-brand">MediPill</a>
+          <img
+            src="https://raw.githubusercontent.com/UltraRaptorYT/SIP-Medication/HY/Medipill.png"
+            alt=""
+            style="width: 50px; height: 50px; margin-left: -10px"
+          />
+        </div>
+        <button
+          class="navbar-toggler"
+          data-toggle="collapse"
+          data-target="#navbarMenu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMenu">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a href="#" class="nav-link">Help</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Support</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section class="pt-3">
+      <div class="d-flex align-items-center justify-content-center">
+        <h1
+          class="border border-secondary p-3 rounded-lg bg-dark text-light text-center fontClamp m-0"
+        >
+          Pill Dispenser Manager
+        </h1>
+      </div>
+      <div class="container mt-0 pt-2">
+        <div
+          id="carouselExampleControls"
+          class="carousel slide w-100 d-block mx-auto"
+          data-ride="carousel"
+          data-interval="false"
+        >
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Monday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Monday
+              </h1>
+            </div>
+            <div class="carousel-item">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Tuesday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Tuesday
+              </h1>
+            </div>
+            <div class="carousel-item">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Wednesday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Wednesday
+              </h1>
+            </div>
+            <div class="carousel-item">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Thursday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Thursday
+              </h1>
+            </div>
+            <div class="carousel-item">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Friday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Friday
+              </h1>
+            </div>
+            <div class="carousel-item">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Saturday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Saturday
+              </h1>
+            </div>
+            <div class="carousel-item">
+              <h1
+                class="text-center fontClampXL m-0"
+                id="Sunday"
+                style="height: 50px; padding-top: 7px"
+              >
+                Sunday
+              </h1>
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev carousel-control"
+            type="button"
+            id="prevDay"
           >
-            <div class="carousel-inner text-center" id="medicineSelector"></div>
-            <button
-              class="carousel-control-prev carousel-control"
-              type="button"
-              data-target="#theCarousel"
-              data-slide="prev"
+            <span
+              class="carousel-control-prev-icon carousel-icon"
+              aria-hidden="true"
+              ><i class="bi bi-caret-left-fill"></i
+            ></span>
+            <span class="sr-only">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next carousel-control"
+            type="button"
+            id="nextDay"
+          >
+            <span
+              class="carousel-control-next-icon carousel-icon"
+              aria-hidden="true"
+              ><i class="bi bi-caret-right-fill"></i
+            ></span>
+            <span class="sr-only">Next</span>
+          </button>
+        </div>
+        <div class="row my-2">
+          <div class="col-12">
+            <div
+              class="carousel slide multi-item-carousel"
+              id="theCarousel"
+              data-touch="false"
             >
-              <span
-                class="carousel-control-prev-icon carousel-icon"
-                aria-hidden="true"
-                ><i class="bi bi-caret-left-fill"></i
-              ></span>
-              <span class="sr-only">Previous</span></button
-            ><button
-              class="carousel-control-next carousel-control"
-              type="button"
-              data-target="#theCarousel"
-              data-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon carousel-icon"
-                aria-hidden="true"
-                ><i class="bi bi-caret-right-fill"></i
-              ></span>
-              <span class="sr-only">Next</span>
-            </button>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div
-        id="carouselExampleControls"
-        class="carousel slide w-100 d-block mx-auto"
-        data-ride="carousel"
-        data-interval="false"
-      >
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <h1 class="text-center" id="Monday">Monday</h1>
-          </div>
-          <div class="carousel-item">
-            <h1 class="text-center" id="Tuesday">Tuesday</h1>
-          </div>
-          <div class="carousel-item">
-            <h1 class="text-center" id="Wednesday">Wednesday</h1>
-          </div>
-          <div class="carousel-item">
-            <h1 class="text-center" id="Thursday">Thursday</h1>
-          </div>
-          <div class="carousel-item">
-            <h1 class="text-center" id="Friday">Friday</h1>
-          </div>
-          <div class="carousel-item">
-            <h1 class="text-center" id="Saturday">Saturday</h1>
-          </div>
-          <div class="carousel-item">
-            <h1 class="text-center" id="Sunday">Sunday</h1>
-          </div>
-        </div>
-        <button
-          class="carousel-control-prev carousel-control"
-          type="button"
-          id="prevDay"
-        >
-          <span
-            class="carousel-control-prev-icon carousel-icon"
-            aria-hidden="true"
-            ><i class="bi bi-caret-left-fill"></i
-          ></span>
-          <span class="sr-only">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next carousel-control"
-          type="button"
-          id="nextDay"
-        >
-          <span
-            class="carousel-control-next-icon carousel-icon"
-            aria-hidden="true"
-            ><i class="bi bi-caret-right-fill"></i
-          ></span>
-          <span class="sr-only">Next</span>
-        </button>
-      </div>
-      <!--Display-->
-      <div
-        class="wrapper justify-content-center"
-        style="height: 50vh"
-        id="machine"
-      ></div>
-      <br />
-      <div class="row justify-content-around align-items-center text-center">
-        <div class="drag-container col-6 col-md-3" id="Trash">
-          <i class="bi bi-trash3-fill"></i>
-        </div>
-        <div class="col-6 col-md-3">
-          <button class="btn btn-primary">Dispense Now</button>
-        </div>
-        <div class="col-6 col-md-3">
-          <a href="\5\on" class="btn btn-primary">Alert Now</a>
-        </div>
-        <div class="col-6 col-md-3">
-          <div class="d-flex flex-column">
-            <p class="m-0">No. of Box</p>
-            <div class="d-flex justify-content-around align-items-center">
-              <button class="btn btn-secondary" id="minus">-</button>
-              <p class="m-0" id="boxes">2</p>
-              <button class="btn btn-secondary" id="add">+</button>
+              <div
+                class="carousel-inner text-center"
+                id="medicineSelector"
+              ></div>
+              <button
+                class="carousel-control-prev carousel-control"
+                type="button"
+                data-target="#theCarousel"
+                data-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon carousel-icon"
+                  aria-hidden="true"
+                  ><i class="bi bi-caret-left-fill"></i
+                ></span>
+                <span class="sr-only">Previous</span></button
+              ><button
+                class="carousel-control-next carousel-control"
+                type="button"
+                data-target="#theCarousel"
+                data-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon carousel-icon"
+                  aria-hidden="true"
+                  ><i class="bi bi-caret-right-fill"></i
+                ></span>
+                <span class="sr-only">Next</span>
+              </button>
             </div>
           </div>
         </div>
+        <!--Display-->
+        <div class="wrapper justify-content-center" id="machine"></div>
+        <div
+          class="row justify-content-around align-items-center text-center"
+          style="gap: 5px"
+        >
+          <div class="drag-container col-5 col-md-2" id="Trash">
+            <i class="bi bi-trash3-fill"></i>
+          </div>
+          <div class="col-5 col-md-2">
+            <button class="btn btn-primary">Dispense Now</button>
+          </div>
+          <div class="col-5 col-md-2">
+            <a href="\5\on" class="btn btn-primary">Alert Now</a>
+          </div>
+          <div class="col-5 col-md-2">
+            <div class="d-flex flex-column">
+              <p class="m-0 font-weight-bold">No. of Box</p>
+              <div class="d-flex justify-content-around align-items-center">
+                <button class="btn btn-secondary" id="minus">-</button>
+                <p class="m-0" id="boxes">2</p>
+                <button class="btn btn-secondary" id="add">+</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="row justify-content-around align-items-center text-center mt-2"
+        >
+          <button class="btn btn-secondary" id="save" disabled>Save</button>
+          <button class="btn btn-success" id="done">Done</button>
+        </div>
       </div>
-      <div class="row justify-content-around align-items-center text-center">
-        <button class="btn btn-secondary" id="save" disabled>Save</button>
-        <button class="btn btn-success" id="done">Done</button>
-      </div>
-    </div>
+    </section>
 
     <script
       src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
@@ -349,7 +472,7 @@
         ) {
           document.getElementById(
             "machine"
-          ).innerHTML += `<div class="drag-container"></div>`;
+          ).innerHTML += `<div class="drag-container m-2"></div>`;
         }
         if (
           document.getElementById("machine").children.length >
@@ -383,7 +506,7 @@
       document.getElementById("add").addEventListener("click", () => {
         var value = Number(document.getElementById("boxes").innerHTML);
         value = value + 1;
-        if (value <= 10) {
+        if (value <= 7) {
           document.getElementById("boxes").innerHTML = value;
           createBoxes();
         }
@@ -397,7 +520,7 @@
         ) {
           document.getElementById(
             "machine"
-          ).innerHTML += `<div class="drag-container"></div>`;
+          ).innerHTML += `<div class="drag-container m-2"></div>`;
         }
         var targets = document.querySelectorAll(".drag-container");
         [].forEach.call(targets, function (target) {
@@ -406,18 +529,18 @@
       });
       // Change Medicine
       var medicines = {
-        pill1: `<div class="drag-item drag-item--red" draggable="true"></div>`,
-        pill2: `<div class="drag-item drag-item--green" draggable="true"></div>`,
-        pill3: `<div class="drag-item drag-item--blue" draggable="true"></div>`,
-        pill4: `<div class="drag-item drag-item--orange" draggable="true"></div>`,
-        pill5: `<div class="drag-item drag-item--pink" draggable="true"></div>`,
-        pill6: `<div class="drag-item drag-item--purple" draggable="true"></div>`,
-        pill7: `<div class="drag-item drag-item--yellow" draggable="true"></div>`,
-        pill8: `<div class="drag-item drag-item--violet" draggable="true"></div>`,
-        pill9: `<div class="drag-item drag-item--lime" draggable="true"></div>`,
+        pill1: `<div class="drag-item pill red" draggable="true"></div>`,
+        pill2: `<div class="drag-item pill green" draggable="true"></div>`,
+        pill3: `<div class="drag-item pill blue" draggable="true"></div>`,
+        pill4: `<div class="drag-item pill orange" draggable="true"></div>`,
+        pill5: `<div class="drag-item pill pink" draggable="true"></div>`,
+        pill6: `<div class="drag-item pill purple" draggable="true"></div>`,
+        pill7: `<div class="drag-item pill yellow" draggable="true"></div>`,
+        pill8: `<div class="drag-item pill violet" draggable="true"></div>`,
+        pill9: `<div class="drag-item pill lime" draggable="true"></div>`,
       };
       for (var [pill, pillImage] of Object.entries(medicines)) {
-        var template = `<div class="item carousel-item"><div class="drag-container generate generate--${pill}">${pillImage}</div></div>`;
+        var template = `<div class="item carousel-item"><div class="drag-container generate generate--${pill}" id="pills">${pillImage}</div></div>`;
         document.getElementById("medicineSelector").innerHTML += template;
       }
       document
